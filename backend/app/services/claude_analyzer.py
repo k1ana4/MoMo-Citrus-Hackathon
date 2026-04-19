@@ -3,6 +3,7 @@ import json
 from dotenv import load_dotenv
 from anthropic import AsyncAnthropic
 
+
 load_dotenv()
 
 client = AsyncAnthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))

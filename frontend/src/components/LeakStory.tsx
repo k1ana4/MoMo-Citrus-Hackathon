@@ -42,11 +42,7 @@ export default function LeakStory({ leaks }: { leaks: any[] }) {
             <p style={{ fontSize: '0.875rem', color: '#cbd5e1', lineHeight: '1.6', marginBottom: '8px' }}>
               {leak.explanation}
             </p>
-
-            {/* Story - italicized, purple */}
-            <p style={{ fontSize: '0.8rem', color: '#a78bfa', fontStyle: 'italic', lineHeight: '1.5' }}>
-              💭 {leak.story}
-            </p>
+            
           </div>
         ))}
       </div>
