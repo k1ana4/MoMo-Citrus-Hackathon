@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import analyze
+from MoMo.backend.app.routes import analyze
 
 app = FastAPI(title="MoMo API")
 

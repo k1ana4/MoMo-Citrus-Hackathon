@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from app.services.prescan import prescan_code
-from app.services.claude_analyzer import analyze_with_claude
+from MoMo.backend.app.services.prescan import prescan_code
+from MoMo.backend.app.services.claude_analyzer import analyze_with_claude
 
 router = APIRouter()
 
