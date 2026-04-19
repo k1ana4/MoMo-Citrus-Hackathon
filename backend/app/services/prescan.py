@@ -1,43 +1,30 @@
 import re
 
 def prescan_code(code: str, language: str) -> dict:
-    """
-    Fast regex-based scan for common leak patterns.
-    This helps Claude focus on the right areas.
-    """
     lines = code.split("\n")
     suspicious = []
 
     if language in ("cpp", "c"):
         for i, line in enumerate(lines, 1):
             stripped = line.strip()
-            # malloc/calloc/realloc without corresponding free
             if re.search(r'\b(malloc|calloc|realloc)\s*\(', stripped):
                 suspicious.append({"line": i, "type": "allocation", "code": stripped})
-            # new without delete
             if re.search(r'\bnew\s+\w+', stripped) and 'delete' not in stripped:
                 suspicious.append({"line": i, "type": "new_allocation", "code": stripped})
-            # fopen without fclose
             if re.search(r'\bfopen\s*\(', stripped):
                 suspicious.append({"line": i, "type": "file_handle", "code": stripped})
-            # Raw pointer assignments
             if re.search(r'\*\s*\w+\s*=.*(malloc|new)', stripped):
                 suspicious.append({"line": i, "type": "raw_pointer", "code": stripped})
-
-        # Count allocations vs frees to sanity check
         alloc_count = len(re.findall(r'\b(malloc|calloc|realloc|new)\b', code))
         free_count = len(re.findall(r'\b(free|delete)\b', code))
 
     elif language == "python":
         for i, line in enumerate(lines, 1):
             stripped = line.strip()
-            # Circular references
             if re.search(r'self\.\w+\s*=\s*self', stripped):
                 suspicious.append({"line": i, "type": "circular_ref", "code": stripped})
-            # Open file without context manager
             if re.search(r'=\s*open\s*\(', stripped) and 'with' not in stripped:
                 suspicious.append({"line": i, "type": "file_no_context", "code": stripped})
-            # Unbounded caches
             if re.search(r'(cache|memo)\s*=\s*\{\}', stripped, re.IGNORECASE):
                 suspicious.append({"line": i, "type": "unbounded_cache", "code": stripped})
         alloc_count = 0

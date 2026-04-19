@@ -1,10 +1,9 @@
-from dotenv import load_dotenv
-import os
-load_dotenv()
-
 import os
 import json
+from dotenv import load_dotenv
 from anthropic import AsyncAnthropic
+
+load_dotenv()
 
 client = AsyncAnthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
@@ -47,7 +46,7 @@ You MUST respond with valid JSON only, matching this exact schema:
 }
 
 Score rules: 100 = perfect, subtract 20 per high severity leak, 10 per medium, 5 per low.
-Be encouraging — students are learning!"""
+Be encouraging, students are learning!"""
 
 
 async def analyze_with_claude(code: str, language: str, hints: dict) -> dict:
@@ -60,7 +59,7 @@ Code to analyze:
 ```{language}
 {code}
 ```
-Return ONLY the JSON object — no markdown, no commentary."""
+Return ONLY the JSON object, no markdown, no commentary."""
 
     try:
         message = await client.messages.create(

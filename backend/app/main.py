@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from MoMo.backend.app.routes import analyze
+from app.routes import analyze
 
 app = FastAPI(title="MoMo API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # lock down in production
+    allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -15,4 +15,4 @@ app.include_router(analyze.router, prefix="/api")
 
 @app.get("/")
 def root():
-    return {"status": "MoMo is thinking... o(*￣▽￣*)ブ"}
+    return {"status": "MoMo is thinking 🧠"}
