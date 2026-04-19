@@ -3,8 +3,7 @@ import json
 from dotenv import load_dotenv
 from anthropic import AsyncAnthropic
 
-
-load_dotenv()
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '..', '..', '.env'))
 
 client = AsyncAnthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
